@@ -32,7 +32,7 @@ public class Muggle extends Persona {
 
     @Override
     public boolean esMayorEdad() {
-        return super.calcularEdad() > 18; 
+        return super.calcularEdad() >= 18; 
     }
     
 }
