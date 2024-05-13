@@ -4,10 +4,24 @@
  */
 package hogwarts;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
 /**
  *
  * @author a21nadiami
  */
 public class Hogwarts {
+    private ArrayList<Persona> alumnos; 
+    private HashMap<Profesor, String> profMateria; 
     
+    public boolean anhadirAlumno(Mago alumno){
+        Casa casa = casaAleatoria(); 
+    }
+    
+    private Casa casaAleatoria(){
+        Casa[] valoresPosibles = Casa.values(); 
+        return valoresPosibles[Random.nextInt(valoresPosibles.length)]; 
+    }
 }
