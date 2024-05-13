@@ -4,10 +4,32 @@
  */
 package hogwarts;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author a21nadiami
  */
-public class Persona {
+public abstract class Persona {
+    private String nombre; 
+    private LocalDate fechaNacimiento; 
+
+    public Persona(String nombre, LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
+    public abstract boolean esMayorEdad(); 
+    
+    protected int calcularEdad(){
+        return LocalDate.now().getYear() - fechaNacimiento.getYear();  
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + '}';
+    }
+    
+    
     
 }
