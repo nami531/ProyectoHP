@@ -7,6 +7,7 @@ package hogwarts;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -40,8 +41,7 @@ public class Hogwarts {
     /*Comprobar si ya esta asignado*/
     public boolean asignarProfesor(String materia, Profesor profe){
         profMateria.put(profe, materia); 
-        return false;
-        
+        return true;         
     }
     
     private Casa casaAleatoria(){
@@ -53,7 +53,8 @@ public class Hogwarts {
     
     private void listarProfesores(){
         for (Profesor profe : profMateria.keySet() ) {
-            profMateria[profe]; 
+            System.out.println("Nombre: " + profe + " Materia: " + profMateria.get(profe) ); 
         }
     }
+    
 }
