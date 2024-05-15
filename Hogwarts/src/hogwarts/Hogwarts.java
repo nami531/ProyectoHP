@@ -51,10 +51,24 @@ public class Hogwarts {
         return valoresPosibles[valorAleatorio]; 
     }
     
-    private void listarProfesores(){
+    public void listarProfesores(){
         for (Profesor profe : profMateria.keySet() ) {
             System.out.println("Nombre: " + profe + " Materia: " + profMateria.get(profe) ); 
         }
+    }
+    
+    /*Esto es si solo nos pidiese los alumnos actuales*/
+    public ArrayList<Persona> alumnadoCasa(Casa casa){
+        ArrayList<Persona> listaAlumnado = new ArrayList<>(); 
+        for (Persona alumno : alumnos) {
+            /*Importante el operador bit a bit &&; Primero se evalúua que el alumno
+            es un mago, si esto es verdadero, continuamos y comprobamos que la casa
+            del alumno coincida o no con la que pasamos*/
+            if (alumno instanceof Mago && ((Mago)alumno).getCasa().equals(casa)){
+                listaAlumnado.add(alumno); 
+            }
+        }
+        return listaAlumnado; 
     }
     
 }

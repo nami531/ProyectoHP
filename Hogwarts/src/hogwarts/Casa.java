@@ -4,6 +4,8 @@
  */
 package hogwarts;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author a21nadiami
@@ -12,5 +14,20 @@ public enum Casa {
     GRYFFINDOR,
     HUFFLEPUFF,
     RAVENCLAW,
-    SLYTHERIN
+    SLYTHERIN, 
+    GRYFFINDOR(ArrayList<Mago> integrantes),
+    HUFFLEPUFF(ArrayList<Mago> integrantes),
+    RAVENCLAW(ArrayList<Mago> integrantes),
+    SLYTHERIN(ArrayList<Mago> integrantes); 
+    
+    public ArrayList<Mago> integrantes; 
+    
+    Casa(){
+        
+    }
+    
+    Casa(ArrayList<Mago> integrantes){
+        this.integrantes = integrantes; 
+    }
+    
 }

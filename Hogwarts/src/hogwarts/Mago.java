@@ -34,6 +34,10 @@ public class Mago extends Persona {
         this.casa = casa;
     }
 
+    public Casa getCasa() {
+        return casa;
+    }
+
     
     
     
