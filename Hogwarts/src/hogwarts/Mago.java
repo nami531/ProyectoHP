@@ -30,8 +30,16 @@ public class Mago extends Persona {
         return super.toString() + "Mago{" + "tipoEscoba=" + tipoEscoba + ", casa=" + casa + '}';
     }
 
+    public Casa getCasa() {
+        return casa;
+    }
+
     public void setCasa(Casa casa) {
         this.casa = casa;
+    }
+
+    public String getTipoEscoba() {
+        return tipoEscoba;
     }
 
     

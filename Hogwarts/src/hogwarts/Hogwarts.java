@@ -22,6 +22,7 @@ public class Hogwarts {
         alumno.setCasa(casa);
         if (!(alumnos.contains(alumno))){
             alumnos.add(alumno); 
+            casa.anhadirIntegrante(alumno);
             return true; 
         } else {
             return false; 
@@ -55,6 +56,16 @@ public class Hogwarts {
         for (Profesor profe : profMateria.keySet() ) {
             System.out.println("Nombre: " + profe + " Materia: " + profMateria.get(profe) ); 
         }
+    }
+
+    public ArrayList<Mago> casaAlumnado(Casa casa){
+        ArrayList<Mago> listaAlumnado = new ArrayList<>(); 
+        for (Mago alumno : casa.getIntegrantes()) {
+            if (alumno instanceof Mago && alumno.getCasa().equals(casa)){
+                listaAlumnado.add(alumno); 
+            }
+        }
+        return listaAlumnado; 
     }
     
 }
