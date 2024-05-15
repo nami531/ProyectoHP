@@ -69,13 +69,15 @@ public class DAO implements InterfazDAO{
     @Override
     public ArrayList<Persona> devolverAlumnosCasa(Casa casa) throws SQLException {
         String sql = """
-                     SELECT m.tipo_escoba, c.nombre as casa ,p.nombre, p.fecha_nacimiento
-                     FROM mago as m 
-                     left join casa as c 
-                        on m.casa_id = c.id
+                     SELECT m.tipo_escoba, c.nombre as casa ,p.nombre, p.fecha_nacimiento 
+                     FROM alumno as a
+                     join mago as m 
+                     	on a.mago_id = m.id
+                     join casa as c 
+                     	on m.casa_id = c.id
                      left join persona as p 
-                        on m.persona_id = p.id
-                     where c.nombre = ?;  """ ; 
+                     	on m.persona_id = p.id and 
+                     where c.nombre = ?""" ; 
         
         ArrayList<Persona> alumnosCasa = new ArrayList<>(); 
         
