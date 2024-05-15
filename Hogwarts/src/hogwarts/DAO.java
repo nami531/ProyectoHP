@@ -5,6 +5,8 @@
 package hogwarts;
 
 import java.sql.*;
+
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -28,30 +30,96 @@ public class DAO implements InterfazDAO{
     }
 
     @Override
-    public boolean crearAlumno(Persona alumno) {
-        String sql = "INSERT INTO persona VALUES (?,?); "
-                + "INSERT INTO mago VALUES (ID/*SOLUCIONAR*/, ?, ? );"
-                + "INSERT INTO alumno VALUES (ID, ID_PERSONA)"; 
+    public boolean crearAlumno(Persona alumno) throws SQLException {
+        String sql = """
+                    INSERT INTO persona(nombre, fecha_nacimiento) VALUES (?, ?);
+                    SET FOREIGN_KEY_CHECKS = 0;
+                    INSERT INTO mago(persona_id, tipo_escoba, casa_id) VALUES (
+                        (SELECT AUTO_INCREMENT AS last_ai
+                         FROM INFORMATION_SCHEMA.TABLES
+                         WHERE TABLE_SCHEMA = 'hogwarts' AND TABLE_NAME = 'persona'),
+                         ?, 
+                         (SELECT id FROM casa WHERE nombre = ?)
+                    );
+                    INSERT INTO alumno(mago_id) VALUES (
+                        SELECT AUTO_INCREMENT AS last_ai
+                        FROM INFORMATION_SCHEMA.TABLES
+                        WHERE TABLE_SCHEMA = 'hogwarts' AND TABLE_NAME = 'mago'
+                    );
+                    SET FOREIGN_KEY_CHECKS = 1;
+                    """; 
+        
+//        String bdInicialmente = "SET FOREIGN_KEY_CHECKS = 1;";  
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasenha); 
+            PreparedStatement sentencia = conexion.prepareStatement(sql)){
+            
+            if (alumno instanceof Mago mago){
+                sentencia.setString(1, mago.getNombre());
+                sentencia.setDate(2, Date.valueOf(mago.getFechaNacimiento()));
+                sentencia.setString(3, mago.getTipoEscoba());
+                sentencia.setString(4, (mago.getCasa().name()));
+            }                      
+            
+            int filasAfectadas = sentencia.executeUpdate(sql); 
+            return filasAfectadas > 0; 
+        }
+        
+    }
+
+    @Override
+    public ArrayList<Persona> devolverAlumnosCasa(Casa casa) throws SQLException {
+        String sql = """
+                     SELECT m.tipo_escoba, c.nombre as casa ,p.nombre, p.fecha_nacimiento
+                     FROM mago as m 
+                     left join casa as c 
+                        on m.casa_id = c.id
+                     left join persona as p 
+                        on m.persona_id = p.id
+                     where c.nombre = ?;  """ ; 
+        
+        ArrayList<Persona> alumnosCasa = new ArrayList<>(); 
         
         try (Connection conexion = DriverManager.getConnection(url, usuario, contrasenha); 
-                PreparedStatement sentencia = conexion.prepareStatement(sql)){
-            SET 
+            PreparedStatement sentencia = conexion.prepareStatement(sql)){
+            
+            sentencia.setString(1, casa.name());
+            
+            ResultSet resultado = sentencia.executeQuery(); 
+            while (resultado.next()){
+                Mago m = new Mago(resultado.getString("tipo_escoba"), Casa.valueOf(resultado.getString("casa")), resultado.getString("nombre"), (resultado.getDate("fecha_nacimiento")).toLocalDate()); 
+                alumnosCasa.add(m); 
+            }
+        } return alumnosCasa;
+    }
+
+    @Override
+    public boolean cambiarMuggleCreeEnMagia(Muggle alumno) throws SQLException{
+        String sql = "UPDATE muggle" +
+                     "SET cree_en_magia = 1" +
+                     "WHERE persona_id = (select id from persona where nombre = ?)";
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasenha); 
+            PreparedStatement sentencia = conexion.prepareStatement(sql)){
+            
+            sentencia.setString(1, alumno.getNombre()); 
+            
+            int filasAfectadas = sentencia.executeUpdate(); 
+            
+            return filasAfectadas > 0; 
         }
     }
 
     @Override
-    public ArrayList<Persona> devolverAlumnosCasa(Casa casa) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean CambiarMuggleCreeEnMagia(Muggle alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean EliminarProfesor(Mago profesor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminarProfesor(Mago profesor) throws SQLException{
+        String sql = "DELETE from profesor where nombre = ?"; 
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasenha); 
+            PreparedStatement sentencia = conexion.prepareStatement(sql)){
+            
+            sentencia.setString(1, profesor.getNombre()); 
+            
+            int filasAfectadas = sentencia.executeUpdate(); 
+            
+            return filasAfectadas > 0; 
+        }
     }
     
     

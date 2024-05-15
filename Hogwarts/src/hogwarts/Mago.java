@@ -38,6 +38,10 @@ public class Mago extends Persona {
         this.casa = casa;
     }
 
+    public String getTipoEscoba() {
+        return tipoEscoba;
+    }
+
     
     
     
