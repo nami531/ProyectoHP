@@ -14,8 +14,8 @@ import java.util.Random;
 public class Profesor extends Mago implements Docente{
     private static String[] frases = {"No es bueno dejarse arrastrar por los sueños y olvidar vivir", "La valentía siempre es la mejor opción", "La felicidad se puede encontrar incluso en los momentos más oscuros, si uno recuerda encender la luz", "Por el bien común", "Son nuestras elecciones las que muestran quienes somos realmente, mucho más que nuestras habilidades"};
 
-    public Profesor(String tipoEscoba, Casa casa, String nombre, LocalDate fechaNacimiento) {
-        super(tipoEscoba, casa, nombre, fechaNacimiento);
+    public Profesor(String tipoEscoba, String nombre, LocalDate fechaNacimiento) {
+        super(tipoEscoba, nombre, fechaNacimiento);
     }
     
     @Override

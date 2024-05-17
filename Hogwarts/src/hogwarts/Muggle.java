@@ -26,7 +26,7 @@ public class Muggle extends Persona {
 
     @Override
     public String toString() {
-        return super.toString() +  "Muggle{" + "creeEnMagia=" + creeEnMagia + '}';
+        return "Muggle{" + "nombre=" + getNombre() + ", fechaNacimiento=" + getFechaNacimiento() + " creeEnMagia=" + creeEnMagia + '}';
     }
     /*Duda: Debe tener un método toString() para mostrar toda la información, como Persona y como Muggle.*/
 

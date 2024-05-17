@@ -16,6 +16,12 @@ import java.util.Set;
 public class Hogwarts {
     private ArrayList<Persona> alumnos; 
     private HashMap<Profesor, String> profMateria; 
+
+    public Hogwarts() {
+        this.alumnos = new ArrayList<>();
+        this.profMateria = new HashMap<>(); 
+    }
+    
     
     public boolean anhadirAlumno(Mago alumno){
         Casa casa = casaAleatoria(); 
@@ -52,13 +58,13 @@ public class Hogwarts {
         return valoresPosibles[valorAleatorio]; 
     }
     
-    private void listarProfesores(){
+    public void listarProfesores(){
         for (Profesor profe : profMateria.keySet() ) {
-            System.out.println("Nombre: " + profe + " Materia: " + profMateria.get(profe) ); 
+            System.out.println("Nombre: " + profe.getNombre() + " Materia: " + profMateria.get(profe) ); 
         }
     }
 
-    public ArrayList<Mago> casaAlumnado(Casa casa){
+    public ArrayList<Mago> alumnadoCasa(Casa casa){
         ArrayList<Mago> listaAlumnado = new ArrayList<>(); 
         for (Mago alumno : casa.getIntegrantes()) {
             if (alumno instanceof Mago && alumno.getCasa().equals(casa)){
@@ -67,5 +73,14 @@ public class Hogwarts {
         }
         return listaAlumnado; 
     }
+
+    public ArrayList<Persona> getAlumnos() {
+        return alumnos;
+    }
+
+    public HashMap<Profesor, String> getProfMateria() {
+        return profMateria;
+    }
+    
     
 }

@@ -16,4 +16,6 @@ public interface InterfazDAO{
     public ArrayList<Persona> devolverAlumnosCasa(Casa casa) throws SQLException; 
     public boolean cambiarMuggleCreeEnMagia(Muggle alumno) throws SQLException; 
     public boolean eliminarProfesor(Mago profesor) throws SQLException; 
+    public Persona devolverMuggle(String nombre) throws SQLException; 
+    public Profesor devolverProfesor(String nombre) throws SQLException;
 }

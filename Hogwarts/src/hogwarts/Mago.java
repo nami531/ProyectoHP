@@ -14,10 +14,9 @@ public class Mago extends Persona {
     private String tipoEscoba; 
     private Casa casa;
 
-    public Mago(String tipoEscoba, Casa casa, String nombre, LocalDate fechaNacimiento) {
+    public Mago(String tipoEscoba, String nombre, LocalDate fechaNacimiento) {
         super(nombre, fechaNacimiento);
         this.tipoEscoba = tipoEscoba;
-        this.casa = casa;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class Mago extends Persona {
     
     @Override
     public String toString() {
-        return super.toString() + "Mago{" + "tipoEscoba=" + tipoEscoba + ", casa=" + casa + '}';
+        return "Mago{" + "nombre=" + getNombre() + ", fechaNacimiento=" + getFechaNacimiento() +  " tipoEscoba=" + tipoEscoba + ", casa=" + casa + '}';
     }
 
     public Casa getCasa() {
